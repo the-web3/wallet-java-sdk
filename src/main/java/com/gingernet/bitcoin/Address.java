@@ -25,7 +25,6 @@ import java.util.Map;
 
 public class Address {
     private Logger logger = LoggerFactory.getLogger(getClass());
-
     static NetworkParameters params;
 
     // 生成 WIF 格式的地址(中心化钱包使用)

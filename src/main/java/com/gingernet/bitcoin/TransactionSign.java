@@ -34,7 +34,7 @@ public class TransactionSign {
 
     static {
         try {
-            params = MainNetParams.get(); //TestNet3Params.get(); //: MainNetParams.get();
+            params = TestNet3Params.get(); //: MainNetParams.get();
             LOG.info("=== [BTC] bitcoin  client networkID：{} ===", params.getId());
         } catch (Exception e) {
             LOG.info("=== [BTC] com.bscoin.coldwallet.cointype.btc.rawtransaction:{} ===", e.getMessage(), e);
