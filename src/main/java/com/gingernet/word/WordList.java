@@ -27,4 +27,16 @@ public class WordList {
         return seed;
     }
 
+    public String WordEcode() {
+        return "";
+    }
+
+    public String wordDecode() {
+        return "";
+    }
+
+    public boolean ValidAddress() {
+        return true;
+    }
+
 }

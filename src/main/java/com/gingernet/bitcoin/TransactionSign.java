@@ -34,7 +34,7 @@ public class TransactionSign {
 
     static {
         try {
-            params = TestNet3Params.get(); //: MainNetParams.get();
+            params = TestNet3Params.get(); // MainNetParams.get();
             LOG.info("=== [BTC] bitcoin  client networkID：{} ===", params.getId());
         } catch (Exception e) {
             LOG.info("=== [BTC] com.bscoin.coldwallet.cointype.btc.rawtransaction:{} ===", e.getMessage(), e);
@@ -42,7 +42,6 @@ public class TransactionSign {
     }
 
     public String SignTransaction(String privKey, String recevieAddr, String formAddr, long amount, long fee, List<UnSpentUtxo> unUtxos) {
-
         if(!unUtxos.isEmpty() && null != unUtxos){
             List<UTXO> utxos = new ArrayList<UTXO>();
             DumpedPrivateKey dumpedPrivateKey = DumpedPrivateKey.fromBase58(params, privKey);

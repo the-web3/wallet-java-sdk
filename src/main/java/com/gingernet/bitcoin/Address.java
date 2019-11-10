@@ -29,13 +29,14 @@ public class Address {
 
     // 生成 WIF 格式的地址(中心化钱包使用)
     public Map<String, String> generateBtcAddress() {
-        NetworkParameters params = MainNetParams.get();
+        NetworkParameters paramsTest = TestNet3Params.get();
+        //NetworkParameters params = MainNetParams.get();
         ECKey key = new ECKey();
         Map<String, String> btcMap = new HashMap<>();
-        btcMap.put("btcWifPk", key.getPrivateKeyAsWiF(params));
+        btcMap.put("btcWifPk", key.getPrivateKeyAsWiF(paramsTest));
         btcMap.put("btcPk", key.getPrivateKeyAsHex());
         btcMap.put("btcPuKey", key.getPublicKeyAsHex());
-        btcMap.put("btcAddress", key.toAddress(params).toString());
+        btcMap.put("btcAddress", key.toAddress(paramsTest).toString());
         return btcMap;
     }
 
@@ -96,4 +97,6 @@ public class Address {
         }
         return "";
     }
+
+
 }
