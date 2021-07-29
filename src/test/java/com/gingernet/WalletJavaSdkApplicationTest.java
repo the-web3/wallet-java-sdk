@@ -15,6 +15,10 @@ import org.bitcoinj.wallet.DeterministicSeed;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.python.core.PyFunction;
+import org.python.core.PyInteger;
+import org.python.core.PyObject;
+import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +32,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 import org.web3j.protocol.core.DefaultBlockParameter;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -79,6 +86,26 @@ public class WalletJavaSdkApplicationTest {
             result+=random.nextInt(10);
         }
         return result;
+    }
+
+    public static String decodeUnicode(String dataStr) {
+        dataStr = dataStr.replace("%","\\");
+        int start = 0;
+        int end = 0;
+        final StringBuffer buffer = new StringBuffer();
+        while (start > -1) {
+            end = dataStr.indexOf("\\u", start + 2);
+            String charStr = "";
+            if (end == -1) {
+                charStr = dataStr.substring(start + 2, dataStr.length());
+            } else {
+                charStr = dataStr.substring(start + 2, end);
+            }
+            char letter = (char) Integer.parseInt(charStr, 16);
+            buffer.append(new Character(letter).toString());
+            start = end;
+        }
+        return buffer.toString();
     }
 
 //    @Test
@@ -325,18 +352,33 @@ public class WalletJavaSdkApplicationTest {
 //        System.out.println(addr);
 //    }
 
-    @Test
-    public void testBuidTransaction() throws Exception {
-        FileCoinWallet fileCoinWallet = new FileCoinWallet();
-        BigDecimal amount = new BigDecimal("1100000");
-        BigDecimal mbfee  = new BigDecimal("1100000");
-        String sign_str = fileCoinWallet.BuildTransaction("f12h2dnpnwizgtnxyjo3zzrt5v3q7a3uy5b4stbhy",  "f12h2dnpnwizgtnxyjo3zzrt5v3q7a3uy5b4stbhy", amount, mbfee, "");
-        SecureRandom secureRandom = new SecureRandom();
-        byte[] entropy = new byte[DeterministicSeed.DEFAULT_SEED_ENTROPY_BITS / 8];
-        secureRandom.nextBytes(entropy);
-        List<String> str = MnemonicCode.INSTANCE.toMnemonic(entropy);
-        String sg_data = fileCoinWallet.SignTransaction(sign_str, "f100000000", str, "1222");
-        System.out.println(sg_data);
-    }
+//    @Test
+//    public void testBuidTransaction() throws Exception {
+//        FileCoinWallet fileCoinWallet = new FileCoinWallet();
+//        BigDecimal amount = new BigDecimal("1100000");
+//        BigDecimal mbfee  = new BigDecimal("1100000");
+//        String sign_str = fileCoinWallet.BuildTransaction("f12h2dnpnwizgtnxyjo3zzrt5v3q7a3uy5b4stbhy",  "f12h2dnpnwizgtnxyjo3zzrt5v3q7a3uy5b4stbhy", amount, mbfee, "");
+//        SecureRandom secureRandom = new SecureRandom();
+//        byte[] entropy = new byte[DeterministicSeed.DEFAULT_SEED_ENTROPY_BITS / 8];
+//        secureRandom.nextBytes(entropy);
+//        List<String> str = MnemonicCode.INSTANCE.toMnemonic(entropy);
+//        String sg_data = fileCoinWallet.SignTransaction(sign_str, "f100000000", str, "1222");
+//        System.out.println(sg_data);
+//    }
 
+    // 使用调用代码实现地址生成
+    @Test
+    public void testCallPythonAddress() throws Exception {
+        String strPath = "/Users/guo/ZhifishWorkSpace/wallet/chia-wallet/address/create_addr.py";
+        System.out.println("===========start===========");
+        String[] args = new String[] { "python3", strPath};
+        Process proc = Runtime.getRuntime().exec(args);
+        InputStreamReader ir = new InputStreamReader(proc.getInputStream());
+        LineNumberReader input = new LineNumberReader(ir);
+        System.out.println(input.readLine());
+        input.close();
+        ir.close();
+        proc.waitFor();
+        System.out.println("===========end===========");
+    }
 }

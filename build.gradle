@@ -57,6 +57,9 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-configuration2', version: '2.2'
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.56'
 
+    // https://mvnrepository.com/artifact/org.python/jython
+    compile group: 'org.python', name: 'jython', version: '2.7.0'
+
     //compile("log4j:log4j:1.2.17")
     compile("dom4j:dom4j:1.6")
     compile('org.apache.httpcomponents:httpclient:4.5.6')
