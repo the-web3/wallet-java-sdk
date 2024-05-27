@@ -85,6 +85,8 @@ dependencies {
     //swagger2依赖
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    // https://mvnrepository.com/artifact/net.i2p.crypto/eddsa
+    compile group: 'net.i2p.crypto', name: 'eddsa', version: '0.3.0'
 }
 
 //def getDbProperties = {

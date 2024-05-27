@@ -122,13 +122,13 @@ public class WalletJavaSdkApplicationTest {
 //        System.out.println(word);
 //    }
 //
-//    @Test
-//    public void TestCreateBtcAddress() throws Exception {
-//        String wordsList = "one misery space industry hen mistake typical prison plunge yellow disagree arm";
-//        Address address = new Address();
-//        String addr = address.CreateAddressByWord(wordsList);
-//        System.out.println(addr);
-//    }
+    @Test
+    public void TestCreateBtcAddress() throws Exception {
+        String wordsList = "one misery space industry hen mistake typical prison plunge yellow disagree arm";
+        Address address = new Address();
+        String addr = address.CreateAddressByWord(wordsList);
+        System.out.println(addr);
+    }
 //
 //    // 莱特币
 //    @Test
